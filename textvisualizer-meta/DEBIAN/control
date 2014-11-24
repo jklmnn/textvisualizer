@@ -1,0 +1,7 @@
+Package : textvisualizer-meta
+Version : 0.1
+Architecture : all
+Maintainer : jklmnn <jklmnn@web.de>
+Priority : optional
+Description : Meta package for textvisual.
+Depends: dwm, libx11-dev, libxinerama-dev
