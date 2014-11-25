@@ -1,3 +1,5 @@
 tmp/dwm-6.0/dwm
+tmp/textvisualizer-src/x
+*.log
 *.o
 *.swp
