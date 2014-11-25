@@ -1,0 +1,9 @@
+#!/bin/sh
+make -C /tmp/dwm-6.0/
+cp /tmp/dwm-6.0/dwm /usr/bin/dwm
+
+useradd -b /home/ kiosk
+mkdir /home/kiosk/.dwm
+touch /home/kiosk/.dwm/autostart.sh
+echo "#!/bin/sh" > /home/kiosk/.dwm/autostart.sh
+
