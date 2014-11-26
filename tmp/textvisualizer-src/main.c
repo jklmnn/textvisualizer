@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <X11/Xlib.h>
 
 #include "colormapper.h"
@@ -34,7 +36,14 @@ int main(){
 	XKeyEvent xke;
 	long int keycode;
 	FILE *log;
-	log=fopen("tvx.log", "a");
+	char *home = getenv("HOME");
+	int pathlen;
+	for(pathlen = 0; home[pathlen] != 0; pathlen++);
+	char *path = (char*)malloc(pathlen + 9);
+	const char filename[8] = "/tvx.log";
+	memcpy(path, home, pathlen);
+	memcpy(&path[pathlen], filename, 8);
+	log=fopen(path, "a");
 	do{
 		XNextEvent (dsp0, &evt );
 		xke = evt.xkey;

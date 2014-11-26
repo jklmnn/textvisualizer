@@ -1,7 +1,7 @@
 #ifndef KEYTABLE_H
 #define KEYTABLE_H
 
-short int keytable[133] = {
+const short int keytable[133] = {
 	-1,
 	-1,
 	-1,
@@ -137,7 +137,7 @@ short int keytable[133] = {
 	-1, //win
 };
 
-unsigned short int chartable[46] = {
+const unsigned short int chartable[46] = {
 	0x0030,
 	0x0031,
 	0x0032,
