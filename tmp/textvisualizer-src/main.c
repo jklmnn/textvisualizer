@@ -13,11 +13,14 @@ int main(){
 	}
 
 	int screenNumber = DefaultScreen(dsp0);
+	Screen *scrn = DefaultScreenOfDisplay(dsp0);
+	int height = scrn->height;
+	int width = scrn->width;
 
 	unsigned long white = WhitePixel(dsp0, screenNumber);
 	unsigned long black = BlackPixel(dsp0, screenNumber);
 
-	Window mainWindow = XCreateSimpleWindow(dsp0, DefaultRootWindow(dsp0), 100, 100, 200, 200,0, black, white);
+	Window mainWindow = XCreateSimpleWindow(dsp0, DefaultRootWindow(dsp0), 0, 0, width, height, 0, black, white);
 	XMapWindow(dsp0, mainWindow);
 	long eventMask = StructureNotifyMask;
 	XSelectInput( dsp0, mainWindow, eventMask );
