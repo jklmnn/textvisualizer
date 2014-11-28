@@ -6,10 +6,16 @@
 #include "colormapper.h"
 #include "keytable.h"
 
-int main(){
+int main(int argc, char *argv[]){
 	Display *dsp0 = XOpenDisplay( NULL );
 	if(!dsp0){
 		return 1;
+	}
+
+	int psize = 1;
+
+	if(argc > 1){
+		psize = atoi(argv[1]);
 	}
 
 	int screenNumber = DefaultScreen(dsp0);
@@ -47,22 +53,31 @@ int main(){
 	memcpy(path, home, pathlen);
 	memcpy(&path[pathlen], filename, 8);
 	log=fopen(path, "a");
+	XWindowAttributes wnda;
+	XGetWindowAttributes(dsp0, mainWindow, &wnda);
+	printf("Zeile: %d\n", wnda.width);
+	int column = wnda.width;
+	int line = 0;
 	do{
 		XNextEvent (dsp0, &evt );
 		xke = evt.xkey;
 		keycode = keytable[xke.keycode - 1];
 		if(keycode == -3){
 			XSetForeground(dsp0, gc, white);
-			XDrawPoint(dsp0, mainWindow, gc, i, 0);
+			XFillRectangle(dsp0, mainWindow, gc, i, line, psize, psize);
 			if(i > 0){
-				i--;
+				i -= psize;
 			}
 		}else if(keycode >= 0){
 			unsigned long color = mapColor(keycode);
 			XSetForeground(dsp0, gc, color);
-			XDrawPoint(dsp0, mainWindow, gc, i, 0);
-			i++;
+			XFillRectangle(dsp0, mainWindow, gc, i, line, psize, psize);
+			i += psize;;
 			fprintf(log, "%c", (char)chartable[keycode]);
+		}
+		if(i >= column){
+			i = 0;
+			line += psize;
 		}
 	}while(keycode != -2);
 
