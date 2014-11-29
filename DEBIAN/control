@@ -4,4 +4,4 @@ Architecture : all
 Maintainer : jklmnn <jklmnn@web.de>
 Priority : optional
 Description : Tool to set up an presenting enviroment for visualizing text input with coloured pixels.
-Depends: dwm, libx11-dev, libxinerama-dev, gcc, make, nodm, xorg
+Depends: dwm, libx11-dev, libxinerama-dev, gcc, make, nodm, xorg, gnome-screenshot
