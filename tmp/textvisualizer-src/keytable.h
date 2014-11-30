@@ -38,7 +38,7 @@ const short int keytable[133] = {
 	20, //ü
 	44, //+
 	45, //enter
-	-1, //lctrl
+	-4, //lctrl
 	21, //a
 	22, //s
 	23, //d

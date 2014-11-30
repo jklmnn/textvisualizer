@@ -58,27 +58,53 @@ int main(int argc, char *argv[]){
 	printf("Zeile: %d\n", wnda.width);
 	int column = wnda.width;
 	int line = 0;
+	int previouskey = 0;
+	int filenmb = 0;
 	do{
 		XNextEvent (dsp0, &evt );
 		xke = evt.xkey;
 		keycode = keytable[xke.keycode - 1];
-		if(keycode == -3){
-			XSetForeground(dsp0, gc, white);
-			XFillRectangle(dsp0, mainWindow, gc, i, line, psize, psize);
-			if(i > 0){
-				i -= psize;
+		switch(previouskey){
+		case -4:
+			switch(keycode){
+			case 22:
+				system("gnome-screenshot -f test.png -w");
+				i = 0;
+				line = 0;
+				break;
+			default:
+				break;
 			}
-		}else if(keycode >= 0){
-			unsigned long color = mapColor(keycode);
-			XSetForeground(dsp0, gc, color);
-			XFillRectangle(dsp0, mainWindow, gc, i, line, psize, psize);
-			i += psize;;
-			fprintf(log, "%c", (char)chartable[keycode]);
+			break;
+		default:
+			if(keycode >= 0){
+				unsigned long color = mapColor(keycode);
+				XSetForeground(dsp0, gc, color);
+				XFillRectangle(dsp0, mainWindow, gc, i, line, psize, psize);
+				i += psize;;
+				fprintf(log, "%c", (char)chartable[keycode]);
+			}else{
+				switch(keycode){
+				case -3:
+					XSetForeground(dsp0, gc, white);
+		                       	XFillRectangle(dsp0, mainWindow, gc, i, line, psize, psize);
+		                        if(i > 0){
+						i -= psize;
+					}
+					break;
+				case -4:
+					break;
+				default:
+					break;
+				}
+			}
+			break;
 		}
 		if(i >= column){
 			i = 0;
 			line += psize;
 		}
+		previouskey = keycode;
 	}while(keycode != -2);
 
 	fclose(log);
