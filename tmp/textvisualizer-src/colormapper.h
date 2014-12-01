@@ -2,7 +2,7 @@
 #define COLORMAPPER_H
 
 #define COLOR 16777216
-#define KEYCOUNT 45
+#define KEYCOUNT 86
 
 int mapColor(int);
 

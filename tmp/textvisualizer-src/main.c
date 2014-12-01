@@ -60,6 +60,8 @@ int main(int argc, char *argv[]){
 	int line = 0;
 	int previouskey = 0;
 	int filenmb = 0;
+	int namesize;
+	char *cmd;
 	do{
 		XNextEvent (dsp0, &evt );
 		xke = evt.xkey;
@@ -68,20 +70,49 @@ int main(int argc, char *argv[]){
 		case -4:
 			switch(keycode){
 			case 22:
-				system("gnome-screenshot -f test.png -w");
+				namesize = 1;
+				if(filenmb > 9){
+					namesize++;
+					if(filenmb > 99){
+						namesize++;
+						if(filenmb > 999){
+							namesize++;
+							if(filenmb > 9999){
+								namesize++;
+							}
+						}
+					}
+				}
+				cmd = (char*)malloc(27 + pathlen + namesize);
+				sprintf(cmd, "gnome-screenshot -f %s/%d.png -w", home, filenmb);
+				system(cmd);
+				filenmb++;
+				XSetForeground(dsp0, gc, white);
+				XFillRectangle(dsp0, mainWindow, gc, 0, 0, width, height);
 				i = 0;
 				line = 0;
+				free(cmd);
 				break;
 			default:
 				break;
 			}
 			break;
+		case -5:
+			if(keycode < 41 && keycode >= 0){
+				int shkey = keycode + 41;
+				unsigned long color = mapColor(shkey);
+				XSetForeground(dsp0, gc, color);
+				XFillRectangle(dsp0, mainWindow, gc, i, line, psize, psize);
+				i += psize;
+				fprintf(log, "%c", (char)chartable[shkey]);
+				break;
+			}
 		default:
 			if(keycode >= 0){
 				unsigned long color = mapColor(keycode);
 				XSetForeground(dsp0, gc, color);
 				XFillRectangle(dsp0, mainWindow, gc, i, line, psize, psize);
-				i += psize;;
+				i += psize;
 				fprintf(log, "%c", (char)chartable[keycode]);
 			}else{
 				switch(keycode){
