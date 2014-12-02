@@ -99,7 +99,7 @@ int main(int argc, char *argv[]){
 			break;
 		case -5:
 			if(keycode < 41 && keycode >= 0){
-				int shkey = keycode + 41;
+				int shkey = keycode + 46;
 				unsigned long color = mapColor(shkey);
 				XSetForeground(dsp0, gc, color);
 				XFillRectangle(dsp0, mainWindow, gc, i, line, psize, psize);
