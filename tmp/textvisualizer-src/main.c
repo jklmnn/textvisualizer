@@ -62,6 +62,7 @@ int main(int argc, char *argv[]){
 	int filenmb = 0;
 	int namesize;
 	char *cmd;
+	int caps = 0;
 	do{
 		XNextEvent (dsp0, &evt );
 		xke = evt.xkey;
@@ -125,6 +126,12 @@ int main(int argc, char *argv[]){
 					break;
 				case -4:
 					break;
+				case -6:
+					if(caps == 0){
+						caps = 1;
+					}else{
+						caps = 0;
+					}
 				default:
 					break;
 				}
@@ -135,7 +142,11 @@ int main(int argc, char *argv[]){
 			i = 0;
 			line += psize;
 		}
-		previouskey = keycode;
+		if(caps == 0){
+			previouskey = keycode;
+		}else{
+			previouskey = -5;
+		}
 	}while(keycode != -2);
 
 	fclose(log);

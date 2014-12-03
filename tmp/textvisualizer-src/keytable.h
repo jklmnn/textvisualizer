@@ -67,7 +67,7 @@ const short int keytable[133] = {
 	-1,
 	-1, //lalt
 	42, //space
-	-1, //capslock
+	-6, //capslock
 	-1, //f1
 	-1, //f2
 	-1, //f3
