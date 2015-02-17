@@ -4,7 +4,7 @@
 NODM_ENABLED=true
 
 # User to autologin for
-NODM_USER=kiosk
+NODM_USER=pi
 
 # First vt to try when looking for free VTs
 NODM_FIRST_VT='7'

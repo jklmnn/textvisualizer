@@ -1,0 +1,11 @@
+nodm
+dwm
+imagemagick
+apache2
+php5
+libx11-dev
+libxinerama-dev
+gcc
+make
+xorg
+dialog

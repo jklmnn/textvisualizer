@@ -1,0 +1,17 @@
+#!/bin/sh
+
+
+dialog --inputbox "Enter pixelsize." 10 10 2>/tmp/tv-pixel.$$
+if [ $? -eq 0 ]; then
+	size=$(cat /tmp/tv-pixel.$$)
+	if [ $size -gt 0 ]; then
+		echo "#!/bin/sh" > /home/pi/.dwm/autostart.sh
+		echo "/usr/bin/setscreen.sh" >> /home/pi/.dwm/autostart.sh
+		echo "/usr/bin/unclutter -root -keystroke -idle 1 &" >> /home/pi/.dwm/autostart.sh
+		echo "/usr/bin/textvisualizer $size" >> /home/pi/.dwm/autostart.sh
+		#sudo service nodm restart
+		exit 0
+	fi
+	exit 2
+fi
+exit 1

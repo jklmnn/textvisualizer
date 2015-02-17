@@ -1,0 +1,10 @@
+<html>
+<head>
+	<title>textvisualizer</title>
+</head>
+<body>
+<?php
+	include('ffw.php');
+?>
+</body>
+</html>

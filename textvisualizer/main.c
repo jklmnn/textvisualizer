@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <X11/Xlib.h>
+#include <time.h>
 
 #include "colormapper.h"
 #include "keytable.h"
@@ -46,6 +47,7 @@ int main(int argc, char *argv[]){
 	long int keycode;
 	FILE *log;
 	char *home = getenv("HOME");
+	time_t timer;
 	int pathlen;
 	for(pathlen = 0; home[pathlen] != 0; pathlen++);
 	char *path = (char*)malloc(pathlen + 9);
@@ -68,36 +70,6 @@ int main(int argc, char *argv[]){
 		xke = evt.xkey;
 		keycode = keytable[xke.keycode - 1];
 		switch(previouskey){
-		case -4:
-			switch(keycode){
-			case 22:
-				namesize = 1;
-				if(filenmb > 9){
-					namesize++;
-					if(filenmb > 99){
-						namesize++;
-						if(filenmb > 999){
-							namesize++;
-							if(filenmb > 9999){
-								namesize++;
-							}
-						}
-					}
-				}
-				cmd = (char*)malloc(27 + pathlen + namesize);
-				sprintf(cmd, "gnome-screenshot -f %s/%d.png -w", home, filenmb);
-				system(cmd);
-				filenmb++;
-				XSetForeground(dsp0, gc, white);
-				XFillRectangle(dsp0, mainWindow, gc, 0, 0, width, height);
-				i = 0;
-				line = 0;
-				free(cmd);
-				break;
-			default:
-				break;
-			}
-			break;
 		case -5:
 			if(keycode < 41 && keycode >= 0){
 				int shkey = keycode + 46;
@@ -119,11 +91,22 @@ int main(int argc, char *argv[]){
 				switch(keycode){
 				case -3:
 					XSetForeground(dsp0, gc, white);
-		                       	XFillRectangle(dsp0, mainWindow, gc, i, line, psize, psize);
-		                        if(i > 0){
+					if(i > 0){
 						i -= psize;
 					}
+		            XFillRectangle(dsp0, mainWindow, gc, i, line, psize, psize);
 					break;
+				case -2:
+					cmd = (char*)malloc(59);
+					time(&timer);
+					sprintf(cmd, "import -window root /home/pi/images/%d.png", timer);
+					system(cmd);
+					XSetForeground(dsp0, gc, white);
+					XFillRectangle(dsp0, mainWindow, gc, 0, 0, width, height);
+					i = 0;
+					line = 0;
+					free(cmd);
+				break;
 				case -4:
 					break;
 				case -6:
@@ -147,7 +130,7 @@ int main(int argc, char *argv[]){
 		}else{
 			previouskey = -5;
 		}
-	}while(keycode != -2);
+	}while(1);
 
 	fclose(log);
 	XDestroyWindow(dsp0, mainWindow);
