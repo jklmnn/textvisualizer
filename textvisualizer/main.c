@@ -60,6 +60,7 @@ int main(int argc, char *argv[]){
 	printf("Zeile: %d\n", wnda.width);
 	int column = wnda.width;
 	int line = 0;
+	int lpos = 0;
 	int previouskey = 0;
 	int filenmb = 0;
 	int namesize;
@@ -93,6 +94,9 @@ int main(int argc, char *argv[]){
 					XSetForeground(dsp0, gc, white);
 					if(i > 0){
 						i -= psize;
+					}else if(i <= 0 && line > 0){
+						line -= psize;
+						i = lpos - psize;
 					}
 		            XFillRectangle(dsp0, mainWindow, gc, i, line, psize, psize);
 					break;
@@ -122,6 +126,7 @@ int main(int argc, char *argv[]){
 			break;
 		}
 		if(i >= column){
+			lpos = i;
 			i = 0;
 			line += psize;
 		}
